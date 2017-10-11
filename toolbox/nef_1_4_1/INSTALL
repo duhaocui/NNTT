@@ -1,0 +1,13 @@
+Instalation of the NEF
+==============================================
+
+o copy the folders into separate directory
+o add this directory including the subdirectories to the MATLAB path
+  (e.g. using the addNEFpath.m script)
+o try the examples in the examples directory
+o enjoy the toolbox :)
+
+---
+Notes: 
+o This version of NEF should work with MATLAB from version 2009b.
+o to remove the toolbox from MATLAB path use the rmNEFpath.m script

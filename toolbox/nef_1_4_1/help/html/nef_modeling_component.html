@@ -1,0 +1,241 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Modeling component</title><meta name="generator" content="MATLAB 8.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-01-03"><meta name="DC.source" content="nef_modeling_component.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Modeling component</h1><!--introduction--><p>The primary task of the modeling component is the specification of the model for estimation purposes but it also allows simulation of the model to obtain state and measurement data in the case that the model is also used as a data generator.   The classes provided by this component makes it possible to naturally describe random variables and multivariate functions which are than employed for description of the system model.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Decription of the functions</a></li><li><a href="#4">Decription of the random variables</a></li><li><a href="#6">Decription of the model</a></li></ul></div><h2>Decription of the functions<a name="1"></a></h2><p>Fuctions are essential part of the modeling component. They are used in the other two parts of this component. Generally, the function may act upon state, input, noise, and time (i.e. <img src="nef_modeling_component_eq18277933469557677691.png" alt="$f_k(x_k,u_k,\xi_k,k)$"> ). The prime purpose of the functions is to provide either a base for stochastic equations describing the state transition or measurement or for a description of parameter of random variable pdf&#8217;s utilized for the probabilistic description.</p><p>The framework offers three basic classes for functions description:</p><div><ul><li>constant function (<tt>nefConstFunction</tt>) - <img src="nef_modeling_component_eq10923465104759078007.png" alt="$f_k(x_k,u_k,\xi_k)=C$"></li><li>linear function (<tt>nefLinFunction</tt>) - <img src="nef_modeling_component_eq06036801573027496819.png" alt="$f_k(x_k,u_k,\xi_k)=A_k x_k+B_ku_k+G_k\xi_k$"></li><li>handle function (<tt>nefHandleFunction</tt>) - any arbitrary <img src="nef_modeling_component_eq00396935314661392346.png" alt="$f_k(x_k,u_k,\xi_k)$"></li></ul></div><p>The instances of the above mentioned classes describing functions can evaluate the function at an arbitrary point and also its first and second derivatives with respect to state or noise if specified. The most powerful of those is the handle function class <tt>nefHandleFunction</tt> utilizing anonymous function handles in MATLAB&reg;. To show its power, let us consider the nonlinear function</p><p><img src="nef_modeling_component_eq14173511802165653005.png" alt="$$f_k(x_k,u_k,\xi_k)=\arctan\frac{x_{2,k}}{x_{1,k}}+sin(2k)*\xi_k$$"></p><p>The <tt>nefHandleFunction</tt> provides the most easy and quickest way of specifying such a function. The object describing this function can be created using the following command</p><pre class="codeinput"> f = nefHandleFunction(@(x,u,w,k) atan(x(2)/x(1))+sin(2*k)*w,[2,0,1,1]);
+</pre><p>where the first parameter <tt>@(x,u,w,k) atan(x(2)/x(1))+sin(2*k)*w</tt> is the MATLAB&reg; anonymous function handle and the vector [2,0,1,1] determines dimension of individual variables representing state <tt>x</tt>, input <tt>u</tt>, noise <tt>w</tt>, and time <tt>k</tt>.</p><h2>Decription of the random variables<a name="4"></a></h2><p>All the random variables are within the NEF represented as objects which are instances of classes describing various probability density functions (pdf's). All the classes share common interface which provides these basic methods</p><div><ul><li>draw a sample,</li><li>evaluate the pdf at a certain point,</li><li>provide mean and variance,</li><li>display a plot of the pdf.</li></ul></div><p>An important property of the new framework is the fact that all parameters of the random variable distribution may be specified in two ways. They are considered to be either as a constants or as a functions of state, input and time. Thus, they are specified either numerically or using an instance of one of the function classes. This allows not only specification of random variables with time-varying parameters but also specification of conditional pdf&#8217;s which is crucial for probabilistic description of the considered system. As far as actual random variables are concerned, currently the framework supports description of the following pdf&#8217;s:</p><div><ul><li>multivariate uniform (class <tt>nefUniformRV</tt>),</li><li>multivariate Gaussian (class <tt>nefGaussianRV</tt>),</li><li>multivariate Gaussian sum (class <tt>nefGaussianSumRV</tt>),</li><li>multivariate empirical pdf (class <tt>nefEmpiricalRV</tt>),</li><li>univariate Beta (class <tt>nefBetaRV</tt>),</li><li>univariate Gamma (class <tt>nefGammaRV</tt>).</li></ul></div><p><b>Examples of random variable description</b></p><p>The following command creates an object desribing uniformly distributed ramdom variable with pdf <img src="nef_modeling_component_eq13391184312834851829.png" alt="$p(a)=U(2, 4)$"></p><pre class="codeinput">a=nefUniformRV(-2,4);
+</pre><p>The more complex example presents the posibility to describe gaussian transient pdf <img src="nef_modeling_component_eq14328386814768991635.png" alt="$p(x_{k+1}|x_k)=N(x_{k+1}:F x_k+Gu_k,Q)$">, i.e. the case where the mean value is given as linear function of the state and the input. The mean is in this case given by object of the <tt>nefLinFunction</tt>.</p><pre class="codeinput">xMean=nefLinFunction(F,G,[]);
+px=nefGaussianRV(xMean,Q);
+</pre><h2>Decription of the model<a name="6"></a></h2><p>From the theoretical point of view, models considered within the NEF represent a discrete-time stochastic system in state-space representation with a continuous state.</p><p>The model can be described in two distinct ways:</p><div><ul><li>structurally - by means of transient and measurement functions accompanied with probability density functions of state and measurement noises and of the initial state</li><li>probabilisticaly - by means of transient and measurement probability density function accompanied with probability density function of the initial state</li></ul></div><p>The following picture shows how the individual part of the modeling component are used to describe the system model.</p><p><img vspace="5" hspace="5" src="./graphics/system-description-v2.png" alt=""> </p><p><b>Structural description</b></p><p>In this case the system is given by generally nonlinear multivariate time varying functions, describing the state transition and measurement, and random variables, describing state and measurement noise and initial state.</p><p><img src="nef_modeling_component_eq15936096131004960171.png" alt="$$x_{k+1}=f_k(x_k,u_k,w_k)\qquad k=0,1,\dots$$"></p><p><img src="nef_modeling_component_eq08556577744161804080.png" alt="$$z_{k}=h_k(x_k,u_k,v_k)\qquad k=0,1,\dots$$"></p><p>where <img src="nef_modeling_component_eq17814449273309453882.png" alt="$x_k\in R^{n_x}$">, <img src="nef_modeling_component_eq03401343498841820872.png" alt="$z_k\in R^{n_z}$"> and <img src="nef_modeling_component_eq00462732732172453132.png" alt="$u_k\in R^{n_u}$"> are state, measurement  and control of the model, respectively, <img src="nef_modeling_component_eq17814824875225593930.png" alt="$w_k\in R^{n+x}$"> and <img src="nef_modeling_component_eq13445252681063148161.png" alt="$v_k\in R^{n_z}$"> are state and measurement white noises described by pdf's <img src="nef_modeling_component_eq14270041830576786448.png" alt="$p(w_k)$"> and <img src="nef_modeling_component_eq12682109509882497283.png" alt="$p(v_k)$">, respectively. Both noises are mutually independent and they are also independent of the known initial state <img src="nef_modeling_component_eq00349689335557330151.png" alt="$x_0$"> pdf <img src="nef_modeling_component_eq14738950169885758341.png" alt="$p(x_0)$">.</p><p>The representation of structurally described system within the framework is accomplished emplying the <tt>nefEqSystem</tt> class.</p><p>(Demontration of the structural description can be found in <a href="matlab:web('nef_example1.html')">Example 1</a>).</p><p><b>Probabilistic description</b></p><p>This second way of model specification need specify transition and measurement pdf's</p><p><img src="nef_modeling_component_eq09607881203470282192.png" alt="$$p(x_{k+1}|x_k,u_k),\qquad k=0,1,\dots$$"></p><p><img src="nef_modeling_component_eq16514458212388809851.png" alt="$$p(z_{k}|x_k,u_k),\qquad k=0,1,\dots$$"></p><p>and the initial condition of the state is given by <img src="nef_modeling_component_eq14738950169885758341.png" alt="$p(x_0)$">. The model is then represented by the instance of the class <tt>nefPDFSystem</tt>.</p><p>(Demontration of the probabilistic description can be found in <a href="matlab:web('nef_example2.html')">Example 2</a>).</p><p>It should be emphasized that both structural and probabilistic description may be time-varying. The way how the model is specified is often enforced by the chosen estimator. For estimators exclusively within the Kalman filtering framework, the structural description is required. The PF and the Gaussian sum method allow specification of the model by any of the two ways.</p><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2014b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Modeling component
+%
+% The primary task of the modeling component is the specification of the
+% model for estimation purposes but it also allows simulation of the model
+% to obtain state and measurement data in the case that the model is also
+% used as a data generator.
+%   The classes provided by this component makes it possible to naturally
+% describe random variables and multivariate functions which are than
+% employed for description of the system model.
+%
+%
+
+
+%% Decription of the functions
+%
+% Fuctions are essential part of the modeling component. They are used in
+% the other two parts of this component. Generally, the function may act
+% upon state, input, noise, and time (i.e. $f_k(x_k,u_k,\xi_k,k)$ ). The
+% prime purpose of the functions is to provide either a base for stochastic
+% equations describing the state transition or measurement or for a
+% description of parameter of random
+% variable pdf’s utilized for the probabilistic description.
+%
+% The framework offers three basic classes for functions description:
+%
+% * constant function (|nefConstFunction|) - $f_k(x_k,u_k,\xi_k)=C$
+% * linear function (|nefLinFunction|) - $f_k(x_k,u_k,\xi_k)=A_k
+% x_k+B_ku_k+G_k\xi_k$
+% * handle function (|nefHandleFunction|) - any arbitrary
+% $f_k(x_k,u_k,\xi_k)$
+%
+%%
+% The instances of the above mentioned classes describing functions can
+% evaluate the function at an arbitrary point and also its first and second
+% derivatives with respect to state or noise if specified. The most
+% powerful of those is the handle function class |nefHandleFunction|
+% utilizing anonymous function handles in MATLAB(R). To show its power, let
+% us consider the nonlinear function
+% 
+% $$f_k(x_k,u_k,\xi_k)=\arctan\frac{x_{2,k}}{x_{1,k}}+sin(2k)*\xi_k$$
+%
+% The |nefHandleFunction| provides the most easy and quickest way of
+% specifying such a function. The object describing this function can be
+% created using the following command
+ f = nefHandleFunction(@(x,u,w,k) atan(x(2)/x(1))+sin(2*k)*w,[2,0,1,1]);
+ 
+%%
+% where the first parameter |@(x,u,w,k) atan(x(2)/x(1))+sin(2*k)*w| is the
+% MATLAB(R) anonymous function handle and the vector [2,0,1,1] determines
+% dimension of individual variables representing state |x|, input |u|,
+% noise |w|, and time |k|.
+
+%% Decription of the random variables
+%
+% All the random variables are within the NEF represented as objects
+% which are instances of classes describing various probability density
+% functions (pdf's). All the classes share common interface which provides
+% these basic methods
+%
+% * draw a sample,
+% * evaluate the pdf at a certain point,
+% * provide mean and variance,
+% * display a plot of the pdf.
+%
+% An important property of the new framework is the fact that all
+% parameters of the random variable distribution may be specified in two
+% ways. They are considered to be either as a constants or as a functions
+% of state, input and time. Thus, they are specified either numerically or
+% using an instance of one of the function classes. This allows not only
+% specification of random variables with time-varying parameters but also
+% specification of conditional pdf’s which is crucial for probabilistic
+% description of the considered system. As far as actual random variables
+% are concerned, currently the framework supports description of the
+% following pdf’s:
+%
+% * multivariate uniform (class |nefUniformRV|),
+% * multivariate Gaussian (class |nefGaussianRV|),
+% * multivariate Gaussian sum (class |nefGaussianSumRV|),
+% * multivariate empirical pdf (class |nefEmpiricalRV|),
+% * univariate Beta (class |nefBetaRV|),
+% * univariate Gamma (class |nefGammaRV|).
+%
+% *Examples of random variable description*
+% 
+% The following command creates an object desribing uniformly
+% distributed ramdom variable with pdf $p(a)=U(2, 4)$
+a=nefUniformRV(-2,4);
+%%
+% The more complex example presents the posibility to describe gaussian
+% transient pdf $p(x_{k+1}|x_k)=N(x_{k+1}:F x_k+Gu_k,Q)$, i.e. the case
+% where the mean value is given as linear function of the state and the
+% input. The mean is in this case given by object of the |nefLinFunction|.
+xMean=nefLinFunction(F,G,[]);
+px=nefGaussianRV(xMean,Q);
+
+
+%% Decription of the model
+% 
+% From the theoretical point of view, models considered
+% within the NEF represent a discrete-time stochastic system
+% in state-space representation with a continuous state.
+% 
+% The model can be described in two distinct ways:
+%
+% * structurally - by means of transient and measurement functions
+% accompanied with probability density functions of state and measurement
+% noises and of the initial state
+% * probabilisticaly - by means of transient and measurement probability
+% density function accompanied with probability density function of the
+% initial state
+%
+% The following picture shows how the individual part of the modeling
+% component are used to describe the system model.
+%
+% <<./graphics/system-description-v2.png>>
+
+%%
+% *Structural description*
+%
+% In this case the system is given by generally nonlinear multivariate time
+% varying functions, describing the state transition and measurement, and
+% random variables, describing state and measurement noise and initial
+% state.
+%
+% $$x_{k+1}=f_k(x_k,u_k,w_k)\qquad k=0,1,\dots$$
+%
+% $$z_{k}=h_k(x_k,u_k,v_k)\qquad k=0,1,\dots$$
+%
+% where $x_k\in R^{n_x}$, $z_k\in R^{n_z}$ and $u_k\in R^{n_u}$ are state,
+% measurement  and control of the model, respectively, $w_k\in R^{n+x}$ and
+% $v_k\in R^{n_z}$ are state and measurement white noises described by
+% pdf's $p(w_k)$ and $p(v_k)$, respectively. Both noises are mutually
+% independent and they are also independent of the known initial state
+% $x_0$ pdf $p(x_0)$. 
+%
+% The representation of structurally described system within the framework
+% is accomplished emplying the |nefEqSystem| class. 
+%
+% (Demontration of the structural description can be found in
+% <matlab:web('nef_example1.html') Example 1>).
+
+%%
+% *Probabilistic description*
+%
+% This second way of model specification need specify transition and
+% measurement pdf's
+%
+% $$p(x_{k+1}|x_k,u_k),\qquad k=0,1,\dots$$
+%
+% $$p(z_{k}|x_k,u_k),\qquad k=0,1,\dots$$
+%
+% and the initial condition of the state is given by $p(x_0)$. The model is
+% then represented by the instance of the class |nefPDFSystem|.
+%
+% (Demontration of the probabilistic description can be found in
+% <matlab:web('nef_example2.html') Example 2>).
+%
+%%
+% It should be emphasized that both structural and probabilistic
+% description may be time-varying. The way how the model is specified is
+% often enforced by the chosen estimator. For estimators exclusively within
+% the Kalman filtering framework, the structural description is required.
+% The PF and the Gaussian sum method allow specification of the model by
+% any of the two ways.
+
+##### SOURCE END #####
+--></body></html>

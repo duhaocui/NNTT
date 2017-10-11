@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Example demos.xml file for adding demos to the Help browser -->
+<!-- Your version of this file must be named "demos.xml" -->
+<demos>
+    <!-- Top-level Demo title in TOC -->
+    <name>Nonlinear Estimation Framework Demos</name>
+    <type>toolbox</type>
+    <icon>HelpIcon.DEMOS</icon>
+    <description>NEF framework designed for nonlinear state estimation of discrete dynamical systems. The aim of this framework is to facilitate implementation, testing and use of various nonlinear state estimation methods. The main strength of the framework is its versatility due to the possibility of either structural or probabilistic description of the problem. As the toolbox is designed on the object oriented basis, further adding of user-specified nonlinear estimation algorithms is extremely easy. 
+    </description>
+    <website>
+    <a href="http://nft.kky.zcu.cz">NEF web page</a>
+    </website>
+    <!-- First group of demos begins here -->
+    <demosection>
+        <label>Simple state estimation demo</label>
+        <!-- First demo begins here -->
+        <demoitem>
+            <!-- How demo is described in the Contents pane -->
+            <label>State Estimation of Linear Gausian System</label>
+            <!-- Type adds a system icon and this name next to demo item -->
+            <type>M-file</type>
+            <!-- File to display in the Viewing pane -->
+            <file>./StateEstimationOfLinearSystem.html</file>
+            <!-- Supply optinoal thumbnail for demo as a .png file -->
+            <!-- Name it <demo_name>.png -->
+            <!-- for this demo it is ./html/formatted_block_demo.png -->
+        </demoitem>
+    </demosection>
+</demos>

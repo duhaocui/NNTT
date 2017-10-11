@@ -1,0 +1,234 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Estimation experiment for structurally described system</title><meta name="generator" content="MATLAB 8.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-01-03"><meta name="DC.source" content="nef_example1.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Estimation experiment for structurally described system</h1><!--introduction--><p>In this example, the state of the following system will be estimated using the unscented Kalman filter (UKF)</p><p><img vspace="5" hspace="5" src="./graphics/ex1-system.png" alt=""> </p><p>where <img src="nef_example1_eq04084560418051301441.png" alt="$x_k$"> denotes state to be estimated and <img src="nef_example1_eq08311425676771403277.png" alt="$z_k$"> denotes the measurement. The stochastic quantities <img src="nef_example1_eq14124070928814834785.png" alt="$w_k$"> and <img src="nef_example1_eq17921314802056622314.png" alt="$v_k$"> are described by the following pdf's</p><p><img vspace="5" hspace="5" src="./graphics/ex1-noise-pdfs.png" alt=""> </p><p>and the pdf of the initial state <img src="nef_example1_eq14326711717586200669.png" alt="$x_{0}$"> is</p><p><img vspace="5" hspace="5" src="./graphics/ex1-x0-pdf.png" alt=""> </p><p>The classes necessary for description of this problem is depicted below.</p><p><img vspace="5" hspace="5" src="./graphics/system-example1.png" alt=""> </p><p>The model of the system given by the previous relations is described within NEF in three steps.</p><div><ol><li>creation of objects describing the state update and measurement functions and of the</li><li>creation of objects describing the pdf's of the state and measurent noises and of the initial condition</li><li>instantiation of the class <tt>nefEqSystem</tt></li></ol></div><!--/introduction--><p>The stochastic functions will be created using instances of <tt>nefHandleFunction</tt> and <tt>nefLinFunction</tt> class, respectively. The multivariate nonlinear function representing the state update equation is specified using the following command</p><pre class="codeinput">fFun=@(x,u,w,k)[x(1)*x(2)+w(1);x(2)+w(2)];
+f=nefHandleFunction(fFun,[2 0 2 0],<span class="string">'diff1Noise'</span>,@(x,u,w,k) eye(2));
+</pre><p>where the first parameter of the <tt>nefHandleFunction</tt> class constructor is the MATLAB&reg; anonymous handle function, the second parameter specifies the dimensions of the state, control input, state noise and time. The last two parameters specify the first derivative of the nonlinear function with respect to the noise <img src="nef_example1_eq14124070928814834785.png" alt="$w_k$">. The measurement equation is linear and the framework provides two ways of representing such function. The first alternative is to use again the <tt>nefHandleFunction</tt> class, i.e.</p><pre class="codeinput">H=[1 0];
+hFun=@(x,u,v,k) H(1)*x(1)+H(2)*x(2)+v;
+h=nefHandleFunction(hFun,[2 0 1 0],<span class="string">'diff1Noise'</span>,@(x,u,v,k) 1);
+</pre><p>and the second alternative is to create instance of the class <tt>nefLinFunction</tt> in the following way</p><pre class="codeinput">H=[1 0];
+h=nefLinFunction(H,[],1);
+</pre><p>where the second and third parameter specify that there will be no control input in the equation and that the noise will be not weighted, respectively.</p><p>The next step is to describe the random variables <img src="nef_example1_eq14124070928814834785.png" alt="$w_k$">, <img src="nef_example1_eq17921314802056622314.png" alt="$v_k$"> and the prior <img src="nef_example1_eq00349689335557330151.png" alt="$x_0$">. All those random quantities are considered to be Gaussian and thus they are described by instances of the <tt>nefGaussianRV</tt> class:</p><pre class="codeinput">w=nefGaussianRV([0 0]',eye(2)*0.05);
+v=nefGaussianRV(0,0.01);
+x0=nefGaussianRV([0.9;-0.85],1e-1*eye(2));
+</pre><p>Now, it is possible to define the system and proceed with the simulation of its trajectory. As the system is described by stochastic equations, it is necessary to use the <tt>nefEqSystem</tt> class</p><pre class="codeinput">model = nefEqSystem(f,h,w,v,x0);
+</pre><p>The simulation is accomplished by invoking the <tt>simulate</tt> method of the <tt>model</tt> object.  The system is simulated for <img src="nef_example1_eq08691806558890624468.png" alt="$k=1,2,\ldots 20$"> by executing the following commands</p><pre class="codeinput">nSteps=20;
+[z,x]=simulate(model,nSteps,[]);
+</pre><p>where the second parameters determines the number of time steps that should be simulated. The last parameter can be used for specification of the control input if necessary.</p><p>Finally, it is possible to proceed with the state estimation itself. For this example the unscented Kalman filter was chosen. The object describing this estimator is created by executing the following command</p><pre class="codeinput">UKF = nefUKF(model);
+</pre><p>This contructor creates UKF as estimator with the filtering task (which is the default one). Alternative way of creating estimator for the filtering task wold be</p><pre class="codeinput">UKF2 = nefUKF(model,<span class="string">'taskType'</span>,<span class="string">'filtering'</span>);
+</pre><p>In case the prediction or smoothing task will to be performed the <tt>taskType</tt> parameter is set to <tt>'prediction'</tt> or <tt>'fixedLagSmoothing'</tt>, respectivelly. The difference between time steps <img src="nef_example1_eq15636846968047188835.png" alt="$k$"> and <img src="nef_example1_eq08791264202177448659.png" alt="$\ell$"> occuring in the pdf <img src="nef_example1_eq05833863977808119407.png" alt="$p(x_k|z^\ell)$"> is then specified by input parameter pair consiting of string <tt>'taskPar'</tt> and numeric value e.g. the estimator created by the following command will perform two step prediction</p><pre class="codeinput">UKF_prediction = nefUKF(model,<span class="string">'taskType'</span>,<span class="string">'prediction'</span>,<span class="string">'taskPar'</span>,2);
+</pre><p>The estimation is then carried out issuing the following command that calls the <tt>estimate</tt> method of the estimator</p><pre class="codeinput">[estimates] = estimate(UKF,z,[]);
+</pre><p>The results of estimation are stored in cell array data structure with elements given as objects of the <tt>nefGaussianRV</tt> class, i.e. the user receives the pdf's of the estimates. The following code shows the possible way how to graphically compare the point estimates with real state components. Firstly it is necessary to extract the point estimates, i.e. the mean values, form the pdf's</p><pre class="codeinput">time = 1:nSteps;
+xPointEst=zeros(2,nSteps);
+<span class="keyword">for</span> i = time
+   xPointEst(:,i) = evalMean(estimates{i});
+<span class="keyword">end</span>
+</pre><p>and then plot them together and compare with the simulated state</p><pre class="codeinput">subplot(2,1,1)
+plot(time,x(1,:),<span class="string">'b'</span>,<span class="keyword">...</span>
+     time,xPointEst(1,:),<span class="string">'r--'</span>)
+legend(<span class="string">'true'</span>,<span class="string">'UKF point estimate'</span>)
+subplot(2,1,2)
+plot(time,x(2,:),<span class="string">'b'</span>,<span class="keyword">...</span>
+     time,xPointEst(2,:),<span class="string">'r--'</span>)
+legend(<span class="string">'true'</span>,<span class="string">'UKF point estimate'</span>)
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2014b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Estimation experiment for structurally described system
+% 
+% In this example, the state of the following system will be estimated
+% using the unscented Kalman filter (UKF)
+% 
+% <<./graphics/ex1-system.png>>
+%
+% where $x_k$ denotes state to be estimated and $z_k$ denotes the
+% measurement. The stochastic quantities $w_k$ and $v_k$ are described by
+% the following pdf's
+%
+% <<./graphics/ex1-noise-pdfs.png>>
+%
+% and the pdf of the initial state $x_{0}$ is
+%
+% <<./graphics/ex1-x0-pdf.png>>
+%
+% The classes necessary for description of this problem is depicted below.
+%
+% <<./graphics/system-example1.png>>
+%
+% The model of the system given by the previous relations is described
+% within NEF in three steps.
+%
+% # creation of objects describing the state
+% update and measurement functions and of the 
+% # creation of objects describing the pdf's of the state
+% and measurent noises and of the initial condition
+% # instantiation of the class |nefEqSystem|
+
+
+%%
+% The stochastic functions will be created using instances of
+% |nefHandleFunction| and |nefLinFunction| class, respectively. The
+% multivariate nonlinear function representing the state update equation is
+% specified using the following command
+fFun=@(x,u,w,k)[x(1)*x(2)+w(1);x(2)+w(2)];
+f=nefHandleFunction(fFun,[2 0 2 0],'diff1Noise',@(x,u,w,k) eye(2));
+
+%%
+% where the first parameter of the |nefHandleFunction| class constructor is
+% the MATLAB(R) anonymous handle function, the second parameter specifies
+% the dimensions of the state, control input, state noise and time. The
+% last two parameters specify the first derivative of the nonlinear
+% function with respect to the noise $w_k$. The measurement equation is
+% linear and the framework provides two ways of representing such function.
+% The first alternative is to use again the |nefHandleFunction| class, i.e.
+H=[1 0];
+hFun=@(x,u,v,k) H(1)*x(1)+H(2)*x(2)+v;
+h=nefHandleFunction(hFun,[2 0 1 0],'diff1Noise',@(x,u,v,k) 1);
+%%
+% and the second alternative is to create instance of the class
+% |nefLinFunction| in the following way
+H=[1 0];
+h=nefLinFunction(H,[],1);
+%%
+% where the second and third parameter specify that there will be no
+% control input in the equation and that the noise will be not weighted,
+% respectively.
+
+%%
+% The next step is to describe the random variables $w_k$, $v_k$ and
+% the prior $x_0$. All those random quantities are considered to be
+% Gaussian and thus they are described by instances of the |nefGaussianRV|
+% class:
+w=nefGaussianRV([0 0]',eye(2)*0.05);
+v=nefGaussianRV(0,0.01);
+x0=nefGaussianRV([0.9;-0.85],1e-1*eye(2));
+
+%%
+% Now, it is possible to define the system and proceed with the simulation
+% of its trajectory. As the system is described by stochastic equations, it
+% is necessary to use the |nefEqSystem| class
+model = nefEqSystem(f,h,w,v,x0);
+%%
+% The simulation is accomplished by invoking the |simulate| method of the
+% |model| object.  The system is simulated for $k=1,2,\ldots 20$ by
+% executing the following commands
+nSteps=20;
+[z,x]=simulate(model,nSteps,[]);
+%%
+% where the second parameters determines the number of time steps that
+% should be simulated. The last parameter can be used for specification of
+% the control input if necessary. 
+
+%% 
+% Finally, it is possible to proceed with the state estimation itself. For this
+% example the unscented Kalman filter was chosen. The object describing
+% this estimator is created by executing the following command
+UKF = nefUKF(model);
+%%
+% This contructor creates UKF as estimator with the filtering task (which
+% is the default one). Alternative way of creating estimator for the
+% filtering task wold be 
+UKF2 = nefUKF(model,'taskType','filtering');
+%%
+% In case the prediction or smoothing task will to be performed the
+% |taskType| parameter is set to |'prediction'| or |'fixedLagSmoothing'|,
+% respectivelly. The difference between time steps $k$ and $\ell$ occuring
+% in the pdf $p(x_k|z^\ell)$ is then specified by input parameter pair
+% consiting of string |'taskPar'| and numeric value e.g. the estimator
+% created by the following command will perform two step prediction
+UKF_prediction = nefUKF(model,'taskType','prediction','taskPar',2);
+%% 
+% The estimation is then carried out issuing the following command that
+% calls the |estimate| method of the estimator
+[estimates] = estimate(UKF,z,[]);
+
+%%
+% The results of estimation are stored in cell array data structure with
+% elements given as objects of the |nefGaussianRV| class, i.e. the
+% user receives the pdf's of the estimates. The following code shows the
+% possible way how to graphically compare the point estimates with real
+% state components. Firstly it is necessary to extract the point
+% estimates, i.e. the mean values, form the pdf's
+time = 1:nSteps;
+xPointEst=zeros(2,nSteps);
+for i = time
+   xPointEst(:,i) = evalMean(estimates{i});
+end
+%%
+% and then plot them together and compare with the simulated state
+subplot(2,1,1)
+plot(time,x(1,:),'b',...
+     time,xPointEst(1,:),'rREPLACE_WITH_DASH_DASH')
+legend('true','UKF point estimate')
+subplot(2,1,2)
+plot(time,x(2,:),'b',...
+     time,xPointEst(2,:),'rREPLACE_WITH_DASH_DASH')
+legend('true','UKF point estimate')
+
+
+##### SOURCE END #####
+--></body></html>

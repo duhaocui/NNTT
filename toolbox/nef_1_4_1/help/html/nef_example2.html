@@ -1,0 +1,155 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Estimation experiment for probabilistically described system</title><meta name="generator" content="MATLAB 8.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-01-03"><meta name="DC.source" content="nef_example2.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Estimation experiment for probabilistically described system</h1><!--introduction--><p>In this example a ship is moving in x-y plane with the stationary observer at the origin of the plane, The ship is assumed to accelerate and decelerate randomly over time. The state <img src="nef_example2_eq04084560418051301441.png" alt="$x_k$"> is given as <img src="nef_example2_eq14387324617505046370.png" alt="${{\bf x}}_k=\left(x_k,\dot{x}_k,y_k,\dot{y}_k\right)^T$">, where <img src="nef_example2_eq16264912434911602030.png" alt="$x_k,y_k$"> represent position of the ship and <img src="nef_example2_eq17577261086498109626.png" alt="$\dot{x}_k,\dot{y}_k$"> are corresponding velocities. The state dynamics is described by the following transition pdf</p><p><img vspace="5" hspace="5" src="./graphics/ex2-transition-pdf.png" alt=""> </p><p>where <img src="nef_example2_eq03477135337816442916.png" alt="$I_4$"> is the 4-by-4 identity matrix.  The measurement of the model is the direction given by <img src="nef_example2_eq08179401701367868837.png" alt="$\tan^{-1}(\frac{y_k}{x_k})$"> and the corresponding measurement pdf is given as</p><p><img vspace="5" hspace="5" src="./graphics/ex2-measurement-pdf.png" alt=""> </p><p>and the pdf of the initial state <img src="nef_example2_eq06315403080452006831.png" alt="${\bf x}_{0}$"> is</p><p><img vspace="5" hspace="5" src="./graphics/ex2-x0-pdf.png" alt=""> </p><p>The classes necessary for description of this problem is depicted below.</p><p><img vspace="5" hspace="5" src="./graphics/system-example2.png" alt=""> </p><!--/introduction--><p>For specification of the system, the <tt>nefPDFSystem</tt> class will be used. First, the transition pdf is set using its mean and covariance matrix as</p><pre class="codeinput">F = [1 1 0 0;0 1 0 0 ;0 0 1 1 ;0 0 0 1];
+xMean = nefLinFunction(F,[],[]);
+xVariance = 0.0001*eye(4);
+xPdf = nefGaussianRV(xMean,xVariance);
+</pre><p>Then, the measurement pdf is also given by its mean and variance as</p><pre class="codeinput">mFun = @(x,u,v,t) atan(x(3)/x(1));
+zMean = nefHandleFunction(mFun,[4 0 0 0]);
+zVariance = 0.0001;
+zPdf = nefGaussianRV(zMean,zVariance);
+</pre><p>Now, the initial condition is specified as</p><pre class="codeinput">x0Pdf = nefGaussianRV([-0.05 0.001 2 -0.055]',0.01*eye(4));
+</pre><p>Consequently, the system is created using probabilistic description as</p><pre class="codeinput">model = nefPDFSystem(xPdf,zPdf,x0Pdf);
+</pre><p>and simulated using commands</p><pre class="codeinput">nSteps=20;
+[z,x] = simulate(model,nSteps,[]);
+</pre><p>where the measurement values are stored in <tt>z</tt> and values of the state <img src="nef_example2_eq04084560418051301441.png" alt="$x_k$"> in <tt>x</tt>. Finally, to estimate the state <img src="nef_example2_eq04084560418051301441.png" alt="$x_k$"> using the measurement <img src="nef_example2_eq12433900028824232522.png" alt="$z^k$">, the auxiliary particle filter will be used. It will be built by a single command specifying system description (<tt>system</tt>), lag <tt>0</tt> and type of the sampling density:</p><pre class="codeinput">pfEstimator = nefPF(model,<span class="string">'samplingDensity'</span>,<span class="string">'pointAuxiliary'</span>);
+</pre><p>Note that no other design parameters concerning the particle filter were specified and thus the default values were used, such as default sample size is <img src="nef_example2_eq12220848736999192936.png" alt="$100$"> samples, systematic resampling executed at each time instant.</p><p>The actual estimation is issued by</p><pre class="codeinput">[estimates] = estimate(pfEstimator,z,[]);
+</pre><p>As a result, estimates of the filtering pdf <img src="nef_example2_eq07319994259109175224.png" alt="$p(x_k|z_k)$"> given by the empirical pdf <tt>nefEmpiricalRV</tt> are stored in the <tt>estimates</tt>.</p><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2014b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Estimation experiment for probabilistically described system
+%
+% In this example a ship is moving in x-y plane with the stationary
+% observer at the origin of the plane, The ship is assumed to accelerate
+% and decelerate randomly over time. The state $x_k$ is given as ${{\bf
+% x}}_k=\left(x_k,\dot{x}_k,y_k,\dot{y}_k\right)^T$, where $x_k,y_k$
+% represent position of the ship and $\dot{x}_k,\dot{y}_k$ are
+% corresponding velocities. The state dynamics is described by the
+% following transition pdf
+%
+% <<./graphics/ex2-transition-pdf.png>>
+%
+% where $I_4$ is the 4-by-4 identity matrix.  The measurement of the model
+% is the direction given by $\tan^{-1}(\frac{y_k}{x_k})$ and the
+% corresponding measurement pdf is given as
+%
+% <<./graphics/ex2-measurement-pdf.png>>
+%
+% and the pdf of the initial state ${\bf x}_{0}$ is
+%
+% <<./graphics/ex2-x0-pdf.png>>
+%
+% The classes necessary for description of this problem is depicted below.
+%
+% <<./graphics/system-example2.png>>
+%
+%%
+% For specification of the system, the |nefPDFSystem| class will be
+% used. First, the transition pdf is set using its mean and covariance matrix as
+F = [1 1 0 0;0 1 0 0 ;0 0 1 1 ;0 0 0 1];
+xMean = nefLinFunction(F,[],[]);
+xVariance = 0.0001*eye(4);
+xPdf = nefGaussianRV(xMean,xVariance);
+%%
+% Then, the measurement pdf is also given by its mean and variance as
+mFun = @(x,u,v,t) atan(x(3)/x(1));
+zMean = nefHandleFunction(mFun,[4 0 0 0]);
+zVariance = 0.0001;
+zPdf = nefGaussianRV(zMean,zVariance);
+%%
+% Now, the initial condition is specified as 
+x0Pdf = nefGaussianRV([-0.05 0.001 2 -0.055]',0.01*eye(4));
+%%
+% Consequently, the system is created using probabilistic description as
+model = nefPDFSystem(xPdf,zPdf,x0Pdf);
+%%
+% and simulated using commands
+nSteps=20;
+[z,x] = simulate(model,nSteps,[]);
+%%
+% where the measurement values are stored in |z| and values of the
+% state $x_k$ in |x|. Finally, to estimate the state $x_k$
+% using the measurement $z^k$, the auxiliary particle filter will be
+% used. It will be built by a single command specifying system description
+% (|system|), lag |0| and type of the sampling density:
+pfEstimator = nefPF(model,'samplingDensity','pointAuxiliary');
+%%
+% Note that no other design parameters concerning the particle filter were
+% specified and thus the default values were used, such as default sample
+% size is $100$ samples, systematic resampling executed at each time
+% instant.
+%% 
+% The actual estimation is issued by
+[estimates] = estimate(pfEstimator,z,[]);
+%%
+% As a result, estimates of the filtering pdf $p(x_k|z_k)$ given by
+% the empirical pdf |nefEmpiricalRV| are stored in the |estimates|.
+
+
+##### SOURCE END #####
+--></body></html>

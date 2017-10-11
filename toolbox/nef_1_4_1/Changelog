@@ -1,0 +1,53 @@
+ver. 1.4.1			3.1.2017
+    * added measurement difference autocovariance method implementation (nefMDA) for identification 
+      of noise covariance matrices
+
+ver. 1.4.0			6.11.2015
+    * added autocovariance least-squares method implementation (nefALS) for identification 
+      of noise covariance matrices
+
+ver. 1.3.1			29.11.2013
+    * various fixes and enhancements concernig the use of toolbox for control purposes
+    
+ver. 1.3.0			14.10.2013
+    * implemented Stochastic Integration Filter (nefSIF)
+    * the whole toolbox was more optimized for speed bringing about up 2x speedup
+    * corrected issue with new MATLAB version regarding cell array with one zero dimension
+    * it is possible to use square-root version of the local filters as local filters in nefGSM
+    * needs at least MATLAB R2009b
+        
+ver. 1.2.0			Jul 23, 2010
+    * added two new estimators nefSDD2 (numerically stable version of nefDD2)
+     and nefEnKF (ensemble Kalman filter)
+    * nefUKF, nefSUKF, nefDD1, nefDD2, nefSDD1, nefSDD2 support adaptive
+     choice of parameter
+    * nefGSM and nefItKalman can use all the local filters as base
+    * added help into class files for all the estimators
+    * added first version of documentation to the documentation browser
+    * corrected scripts addNEFPath and rmNEFPath to work flawlessly on all
+     platforms supported by MATLAB
+
+ver. 1.1.0			Mar 19, 2010
+    * added performance evaluators (for example of their use see example13)
+    * estimator constructors reports use of default values
+
+ver. 1.0.2			Mar 19, 2010
+    * removed cause of possible MATLAB crash after calling just clear all between two examples
+    * nefGSM estimator can now work with nefPDFSystem
+
+ver. 1.0.1			Mar 12, 2010
+    * stabilized nefPF algorithm (scaling weights for proper normalization)
+    * added evalLogPDF to nefGaussianRV
+    * replaced the likelihood and transPDF by logLikelihood and logTransPDF in nefEqSystem
+    * added some checks of the noises to nefEqSystem
+    * removed critical bug in PF preventing resampling from being executed in some cases
+    * added optimalized code for additive systems in all derivative free filters
+    * removed bug in nefUDKalman when the prediction was not properly updated for all measurement elements
+    * nefUD completely rewritten and renamed to nefUDKalman
+    * added nefSKalman implementing Square-root Kalman filter
+    * nefItFilter and nefGSM can use any of the local filters
+
+1.0.0				Jul 14, 2009 
+    * initial public release
+    * stabilized API of the new framework
+

@@ -1,0 +1,163 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Product overview</title><meta name="generator" content="MATLAB 8.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-01-03"><meta name="DC.source" content="nef_overview.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Product overview</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">NEF description</a></li><li><a href="#6">System requirements</a></li><li><a href="#7">Licensing</a></li></ul></div><h2>NEF description<a name="1"></a></h2><p>NEF is framework designed for nonlinear state estimation of discrete dynamical systems. The aim of this framework is to facilitate implementation, testing and use of various nonlinear state estimation methods. The main strength of the framework is its versatility due to the possibility of either structural or probabilistic description of the problem. As the toolbox is designed on the object oriented basis, further adding of user-specified nonlinear estimation algorithms is extremely easy.</p><pre>The following picture demonstrates the task for which the NEF was
+designed.</pre><p><img vspace="5" hspace="5" src="./graphics/NEF-coverage.png" alt=""> </p><p>The basic tasks that the NEF supports are basicaly these</p><div><ul><li>description and simulation of a plant/model,</li><li>estimation of the state of the model,</li><li>providing estimates in terms of probability density functions.</li></ul></div><p>The most outstanding features of the framework are</p><div><ul><li>highly modular and extensible</li><li>designed with support for natural description of the problem in mind (both structural and probailistic description of generaly time-varying systems)</li><li>fast and easy estimation experiment setup</li><li>facilitates implementation of filtering, prediction and smoothing tasks</li><li>implements many of the popular nonlinear state estimators</li></ul></div><p>The framework itself is divided into several modules each responsible for one task of the estimation experiment desing. The main modules are</p><div><ul><li>modeling componend - used for describing the model including description of time varying random variables and time-varying nonlinear functions</li><li>estimation component - provides many well known estimators and mean for simple performace of all the basig estimation task</li><li>performance evalutors component - offers function for omputing popular performace measures</li></ul></div><p><img vspace="5" hspace="5" src="./graphics/nef-components-v3.png" alt=""> </p><p>Details concerning the individual components will be presented in separate part of this document.</p><h2>System requirements<a name="6"></a></h2><p>This toolbox is designed for use with MATLAB&reg; environment at least version 2009b.</p><h2>Licensing<a name="7"></a></h2><div><ul><li>The NEF is copyrighted freeware provided by the Identification and Decision Making Research Group at the Departement of Cybernetics, University of West Bohemia.</li><li>ANY TYPE OF REDISTRIBUTION AND/OR MODIFICATION OF THE TOOLBOX IS NOT PERMITTED!</li><li>It is not permitted to use this software or any of its part for commercial purposes or include it or its part in commercial products without prior written consent of copyright holders represented by current maintainer of the NEF.</li><li>In case of publication of results obtained using the software you are bound to either name the NEF with the web page of the toolbox and our institution (i.e.Departement of Cybernetics, University of West Bohemia) or cite at least one reference to recent publication on the NEF (to be found at <a href="http://nft.kky.zcu.cz/nef">http://nft.kky.zcu.cz/nef</a>)</li><li>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</li><li>MATLAB is trademark of The MathWorks, Inc.</li></ul></div><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2014b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Product overview
+%
+
+%% NEF description
+%
+% NEF is framework designed for nonlinear state estimation of
+% discrete dynamical systems. The aim of this framework is to facilitate
+% implementation, testing and use of various nonlinear state estimation
+% methods. The main strength of the framework is its versatility due to the
+% possibility of either structural or probabilistic description of the
+% problem. As the toolbox is designed on the object oriented basis, further
+% adding of user-specified nonlinear estimation algorithms is extremely
+% easy.
+
+%%
+%  The following picture demonstrates the task for which the NEF was
+%  designed.
+%
+% <<./graphics/NEF-coverage.png>>
+% 
+
+%%
+% The basic tasks that the NEF supports are basicaly these
+%
+% * description and simulation of a plant/model,
+% * estimation of the state of the model,
+% * providing estimates in terms of probability density
+% functions.
+
+%%
+% The most outstanding features of the framework are
+%
+% * highly modular and extensible
+% * designed with support for natural description of the problem in mind
+% (both structural and probailistic description of generaly time-varying
+% systems) 
+% * fast and easy estimation experiment setup
+% * facilitates implementation of filtering, prediction and smoothing tasks
+% * implements many of the popular nonlinear state estimators
+
+%%
+% The framework itself is divided into several modules each responsible for
+% one task of the estimation experiment desing. The main modules are
+%
+% * modeling componend - used for describing the model including
+% description of time varying random variables and time-varying nonlinear
+% functions
+% * estimation component - provides many well known estimators and mean for
+% simple performace of all the basig estimation task
+% * performance evalutors component - offers function for omputing popular
+% performace measures
+%
+% <<./graphics/nef-components-v3.png>>
+%
+% Details concerning the individual components will be presented in
+% separate part of this document.
+
+%% System requirements
+%
+% This toolbox is designed for use with MATLAB® environment at least version 2009b.
+
+%% Licensing
+%
+% * The NEF is copyrighted freeware provided by the Identification and
+% Decision Making Research Group at the Departement of Cybernetics,
+% University of West Bohemia.  
+% * ANY TYPE OF REDISTRIBUTION AND/OR MODIFICATION OF THE TOOLBOX IS NOT
+% PERMITTED! 
+% * It is not permitted to use this software or any of its part for
+% commercial purposes or include it or its part in commercial products
+% without prior written consent of copyright holders represented by current
+% maintainer of the NEF.   
+% * In case of publication of results obtained using the software you are
+% bound to either name the NEF with the web page of the toolbox and our
+% institution (i.e.Departement of Cybernetics, University of West Bohemia)
+% or cite at least one reference to recent publication on the NEF (to be
+% found at http://nft.kky.zcu.cz/nef)    
+% * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+% IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+% THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+% PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+% CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+% EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+% PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+% PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+% LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+% NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+% SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.          
+% * MATLAB is trademark of The MathWorks, Inc.
+
+##### SOURCE END #####
+--></body></html>

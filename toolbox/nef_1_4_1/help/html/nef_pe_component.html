@@ -1,0 +1,315 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Performace evaluators component</title><meta name="generator" content="MATLAB 8.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-01-03"><meta name="DC.source" content="nef_pe_component.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Performace evaluators component</h1><!--introduction--><!--/introduction--><p>As was mentioned in the estimation component section all the NEF estimators provide the estimates in the form of a conditional pdf of the state. A common task is to measure estimation error and compare performance of several estimators against the true value of the state. Obtaining such a performance index requires a procedure consisting of</p><div><ol><li>collecting data from Monte Carlo (MC) simulations,</li><li>extracting appropriate indicators from the conditional distribution of the state provided by individual estimators,</li><li>evaluating the performance index.</li></ol></div><p>Within the NEF, this process is facilitated by the performance evaluator component. It contains methods for initialization, data processing and evaluation of the performance index which is selected during initialization as well as the number of estimators to be compared and the expected number of MC simulations. The performance index can be evaluated at any time, not necessarily after completing all the MC simulations. Currently, the performance evaluation component provides performance indices given in the following Table.</p><p>
+<table cellspacing="0" class="body" cellpadding="4" border="2" width="90%">
+	<caption>Performance indices implemented in the NEF performance
+evaluation component</caption>
+  <thead>
+    <tr>
+      <th colspan="2" width="100%" align="center" bgcolor="#B2B2B2" valign="top">ABSOLUTE ERROR MEASURES</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>MSEM</td>
+      <td>mean squared error matrix</td>
+    </tr>
+    <tr>
+      <td>RMSE</td>
+      <td>root mean squared error</td>
+    </tr>
+    <tr>
+      <td>AEE</td>
+      <td>average Euclidean error</td>
+    </tr>
+    <tr>
+      <td>HAE</td>
+      <td>harmonic average error</td>
+    </tr>
+    <tr>
+      <td>GAE</td>
+      <td>geometric average error</td>
+    </tr>
+    <tr>
+      <td>MEDE</td>
+      <td>median error</td>
+    </tr>
+    <tr>
+      <td>MODE</td>
+      <td>mode error</td>
+    </tr>
+  </tbody>
+  <thead align="center" valign="top">
+    <tr>
+      <th colspan="2" width="100%" align="center" bgcolor="#B2B2B2" valign="top">RELATIVE ERROR MEASURES</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>RMSRE</td>
+      <td>root mean squared relative error</td>
+    </tr>
+    <tr>
+      <td>ARE</td>
+      <td>average Euclidean relative error</td>
+    </tr>
+    <tr>
+      <td>BEEQ</td>
+      <td>Bayesian estimation error quotient</td>
+    </tr>
+    <tr>
+      <td>EMER</td>
+      <td>estimation error relative to measurement
+error</td>
+    </tr>
+  </tbody>
+  <thead align="center" valign="top">
+    <tr>
+      <th colspan="2" width="100%" align="center" bgcolor="#B2B2B2" valign="top">PERFORMANCE MEASURES</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>NCI</td>
+      <td>non-credibility index</td>
+    </tr>
+    <tr>
+      <td>ANEES</td>
+      <td>average normalized estimation error
+squared</td>
+    </tr>
+  </tbody>
+</table>
+</p><p><b>Example of performance evaluator use</b></p><p>This example will demonstrate the use of <tt>nefPerformaceEvaluator</tt> class for determination of the root mean square error (RMSE). The RMSE will be compared for unscented Kalman filter and particle filter described by objects <tt>UKF</tt> and <tt>PF</tt></p><pre class="codeinput">PF = nefPF(model,<span class="string">'sampleSize'</span>,1000);
+UKF = nefUKF(model);
+</pre><p>Thus te RMSE wil be evaluated for two filters and 100 Monte Carlo runs will be processed</p><pre class="codeinput">nFilters = 2;
+MCRuns = 100;
+</pre><p>The RMSE performace evaluator can be created as instance of the <tt>nefPerformaceEvaluator</tt> class in the following way</p><pre class="codeinput">RMSE_PE = nefPerformanceEvaluator(model,timeHorizon,MCRuns,nFilters,<span class="string">'method'</span>,<span class="string">'RMSE'</span>);
+</pre><p>Now, the Monte Carlosimulations will be performed with processing the results obtained from individual estimators in performance evaluators</p><pre class="codeinput"><span class="keyword">for</span> i = 1:MCRuns
+    [val_PF] = estimate(PF,z,u);
+    [val_UKF] = estimate(UKF,z,u);
+    <span class="keyword">for</span> k = 1:timeHorizon
+        Data.state{1,k} = [x(:,k); u(:,k)];
+        estData{1,1,k} = val_PF{k};
+        estData{2,1,k} = val_UKF{k};
+    <span class="keyword">end</span>
+    processData(RMSE_PE,Data,estData);
+<span class="keyword">end</span>
+</pre><p>Finally, the performance indices are obtained using command</p><pre class="codeinput">rmse = performanceValue(RMSE_PE);
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2014b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Performace evaluators component
+%
+
+%%
+% As was mentioned in the estimation component section all the NEF
+% estimators provide the estimates in the form of a conditional pdf of the
+% state. A common task is to measure estimation error and compare
+% performance of several estimators against the true value of the state.
+% Obtaining such a performance index requires a procedure consisting of 
+% 
+% # collecting data from Monte Carlo (MC) simulations, 
+% # extracting appropriate indicators from the conditional distribution of
+% the state provided by individual estimators,
+% # evaluating the performance index.
+% 
+% Within the NEF, this process is facilitated by the performance evaluator
+% component. It contains methods for initialization, data processing and
+% evaluation of the performance index which is selected during initialization
+% as well as the number of estimators to be compared and the expected
+% number of MC simulations. The performance index can be evaluated at any
+% time, not necessarily after completing all the MC simulations. Currently,
+% the performance evaluation component provides performance indices given
+% in the following Table.
+
+%%
+% 
+% <html>
+% <table cellspacing="0" class="body" cellpadding="4" border="2" width="90%">
+% 	<caption>Performance indices implemented in the NEF performance
+% evaluation component</caption>
+%   <thead>
+%     <tr>
+%       <th colspan="2" width="100%" align="center" bgcolor="#B2B2B2" valign="top">ABSOLUTE ERROR MEASURES</th>
+%     </tr>
+%   </thead>
+%   <tbody>
+%     <tr>
+%       <td>MSEM</td>
+%       <td>mean squared error matrix</td>
+%     </tr>
+%     <tr>
+%       <td>RMSE</td>
+%       <td>root mean squared error</td>
+%     </tr>
+%     <tr>
+%       <td>AEE</td>
+%       <td>average Euclidean error</td>
+%     </tr>
+%     <tr>
+%       <td>HAE</td>
+%       <td>harmonic average error</td>
+%     </tr>
+%     <tr>
+%       <td>GAE</td>
+%       <td>geometric average error</td>
+%     </tr>
+%     <tr>
+%       <td>MEDE</td>
+%       <td>median error</td>
+%     </tr>
+%     <tr>
+%       <td>MODE</td>
+%       <td>mode error</td>
+%     </tr>
+%   </tbody>
+%   <thead align="center" valign="top">
+%     <tr>
+%       <th colspan="2" width="100%" align="center" bgcolor="#B2B2B2" valign="top">RELATIVE ERROR MEASURES</th>
+%     </tr>
+%   </thead>
+%   <tbody>
+%     <tr>
+%       <td>RMSRE</td>
+%       <td>root mean squared relative error</td>
+%     </tr>
+%     <tr>
+%       <td>ARE</td>
+%       <td>average Euclidean relative error</td>
+%     </tr>
+%     <tr>
+%       <td>BEEQ</td>
+%       <td>Bayesian estimation error quotient</td>
+%     </tr>
+%     <tr>
+%       <td>EMER</td>
+%       <td>estimation error relative to measurement
+% error</td>
+%     </tr>
+%   </tbody>
+%   <thead align="center" valign="top">
+%     <tr>
+%       <th colspan="2" width="100%" align="center" bgcolor="#B2B2B2" valign="top">PERFORMANCE MEASURES</th>
+%     </tr>
+%   </thead>
+%   <tbody>
+%     <tr>
+%       <td>NCI</td>
+%       <td>non-credibility index</td>
+%     </tr>
+%     <tr>
+%       <td>ANEES</td>
+%       <td>average normalized estimation error
+% squared</td>
+%     </tr>
+%   </tbody>
+% </table>
+% </html>
+% 
+
+%%
+% *Example of performance evaluator use*
+%
+% This example will demonstrate the use of |nefPerformaceEvaluator| class
+% for determination of the root mean square error (RMSE). The RMSE will be
+% compared for unscented Kalman filter and particle filter described by
+% objects |UKF| and |PF|
+PF = nefPF(model,'sampleSize',1000);
+UKF = nefUKF(model);
+
+%%
+% Thus te RMSE wil be evaluated for two filters and 100 Monte Carlo runs
+% will be processed
+nFilters = 2;
+MCRuns = 100;
+
+%%
+% The RMSE performace evaluator can be created as instance of the
+% |nefPerformaceEvaluator| class in the following way
+RMSE_PE = nefPerformanceEvaluator(model,timeHorizon,MCRuns,nFilters,'method','RMSE');
+
+%%
+% Now, the Monte Carlosimulations will be performed with processing the
+% results obtained from individual estimators in performance evaluators
+for i = 1:MCRuns
+    [val_PF] = estimate(PF,z,u);
+    [val_UKF] = estimate(UKF,z,u);
+    for k = 1:timeHorizon
+        Data.state{1,k} = [x(:,k); u(:,k)];
+        estData{1,1,k} = val_PF{k};
+        estData{2,1,k} = val_UKF{k};
+    end
+    processData(RMSE_PE,Data,estData);
+end
+
+%%
+% Finally, the performance indices are obtained using command
+rmse = performanceValue(RMSE_PE);
+##### SOURCE END #####
+--></body></html>
