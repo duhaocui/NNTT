@@ -136,7 +136,7 @@ classdef nefGaussianSumRV < nefRV
       end
       % set attributes
       % after checkWMV all Weights are either numeric of nefFunction
-      % the same applies to Means and Vars
+      % the isequal applies to Means and Vars
       obj.WNumeric = isnumeric(obj.Weights{1});
       obj.MNumeric = isnumeric(obj.Means{1});
       obj.VNumeric = isnumeric(obj.Vars{1});
@@ -636,21 +636,21 @@ classdef nefGaussianSumRV < nefRV
       end
 
       % checking weights
-      if ~same(Wdim,ones(obj.N,2)) % both size(Weights,1) and size(Weights,2) must be 1 for each weight
+      if ~isequal(Wdim,ones(obj.N,2)) % both size(Weights,1) and size(Weights,2) must be 1 for each weight
         error('NEF:nefGaussianSumRV:ScalarWeights','Weights must be scalar')
       end
       % checking means
-      if ~same(Mdim(:,2),ones(obj.N,1))  % size(Means,2) must be 1 for each mean
+      if ~isequal(Mdim(:,2),ones(obj.N,1))  % size(Means,2) must be 1 for each mean
         error('NEF:nefGaussianSumRV:VectorMean','Mean must be a column vector')
       end
-      if any(Mdim(:,1) ~= Mdim(1,1)) % size(Means,1) must be same for all means
+      if any(Mdim(:,1) ~= Mdim(1,1)) % size(Means,1) must be isequal for all means
         error('NEF:nefGaussianSumRV:InconsMean','Inconsistent mean sizes')
       end
       % checking variances
-      if ~same(Vdim(:,1),Vdim(:,2)) % size(Vars,1) and size(Vars,2) must be equal for each variance matrix
+      if ~isequal(Vdim(:,1),Vdim(:,2)) % size(Vars,1) and size(Vars,2) must be equal for each variance matrix
         error('NEF:nefGaussianSumRV:SquareCovar','Each covariance matrix must be square')
       end
-      if any(Vdim(:,1) ~= Vdim(1,1)) % size(Vars,1) must be same for all variance matrix
+      if any(Vdim(:,1) ~= Vdim(1,1)) % size(Vars,1) must be isequal for all variance matrix
         error('NEF:nefGaussianSumRV:InconsCovar','Incompatible covariance matrix sizes')
       end
       % checking means with respect to variances
