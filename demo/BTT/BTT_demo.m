@@ -38,7 +38,8 @@ subplot(3, 1, 3)
 plot(1:nSteps, z(2, :) )
 % setting up filters
 disp('Setting up filters: UKF')
-UKF = nefUKF(system);
+UKF = nefUKF(system, 'scalingParameterType','adaptive', ...
+                     'parameterCriterion', 'MMPE');
 % filterign
 disp('Running UKF filter ...')
 t = cputime;
