@@ -34,14 +34,6 @@ mx0 = nefGaussianSumRV(1, x0, 'parameters', 'wnefgaussianrv');
 % creating system and simulating its trajectory
 system = nefEqSystem(f, h, mw, mv, mx0);
 [z, x] = simulate(system, nSteps, []);
-% testing
-figure
-subplot(3, 1, 1)
-plot(x(1, :), x(3, :) )
-subplot(3, 1, 2)
-plot(1:nSteps, z(1, :) )
-subplot(3, 1, 3)
-plot(1:nSteps, z(2, :) )
 % setting up filters
 disp('Setting up filters: GSM')
 GSM = nefGSM(system, 'localFilter', 'ukf', ...
@@ -65,6 +57,14 @@ end
 fprintf('Stats : MSEM\t\t time\n')
 fprintf('GSM   : %f\t%f\n',mean(mean(msem_GSM) ), GSMtime);
 % show plots
+% testing
+figure
+subplot(3, 1, 1)
+plot(x(1, :), x(3, :) )
+subplot(3, 1, 2)
+plot(t, z(1, :) )
+subplot(3, 1, 3)
+plot(t, z(2, :) )
 figure
 subplot(2, 2, 1)
 plot(t, x(1, :), 'b', t, xest_GSM(1, :), 'r--')
