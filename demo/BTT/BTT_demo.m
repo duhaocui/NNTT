@@ -40,7 +40,7 @@ plot(1:nSteps, z(2, :) )
 disp('Setting up filters: UKF')
 UKF = nefUKF(system);
 % filterign
-disp('Runnign UKF filter ...')
+disp('Running UKF filter ...')
 t = cputime;
 [val_UKF] = estimate(UKF, z, []);
 UKFtime = cputime - t;
