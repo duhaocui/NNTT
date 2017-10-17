@@ -12,3 +12,5 @@ z_theta = atan2( (y - y_R), (x - x_R) );
 z = zeros(2, 1);
 z(1) = z_r;
 z(2) = z_theta;
+
+z = z + v;
